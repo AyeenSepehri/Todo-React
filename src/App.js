@@ -1,11 +1,10 @@
 import React from "react";
-import { ReactDOM } from "react";
-import Todo from "./components/Todo"
+import InputTodo from "./components/InputTodo";
 function App() {
   return (
     <div className="App">
       <h1>hello</h1>
-      <Todo text = "my first todo"/>
+      <InputTodo/>
     </div>
   );
 }
