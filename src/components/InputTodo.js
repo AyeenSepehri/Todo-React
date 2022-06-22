@@ -6,7 +6,7 @@ function InputTodo() {
     const changeTodo = (e) => {
         setTodoValue(e.target.value)
       }
-      const submitTodo = (e) => {
+      const submitTodo = () => {
         const updateTodo = [...todoItm]
         updateTodo.push(todoValue)
         setTodoItm(updateTodo)
