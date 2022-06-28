@@ -19,10 +19,14 @@ function TodoItem(props) {
   }
 
   return (
-    <div>
-      <p className={complete ? classes.completeItm : ""} >{props.todo}</p>
-      <button onClick={markHandler}>mark</button>
-      <button onClick={deleteHandler}>delete</button>
+    <div className='bg-white flex flex-row my-7 p-3'>
+      <div className='my-auto'>
+        <p className={complete ? classes.completeItm : ""} >{props.todo}</p>
+      </div>
+      <div className='ml-auto'>
+        <button  className ="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={markHandler}>mark</button>
+        <button  className ="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={deleteHandler}>delete</button>
+      </div>
     </div>
   )
 }

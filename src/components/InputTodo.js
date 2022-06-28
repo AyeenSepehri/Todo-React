@@ -39,22 +39,30 @@ function InputTodo() {
       }
       const todoInputField = register("todo", { required: true });
   return (
-    <div>
+    <div className='flex flex-col mt-10'>
+      <div className='flex flex-col justify-center bg-sky-500 h-28 rounded-b-2xl py-10 px-10 shadow-2xl'>
+          <label>insert your todos of today:</label>
+        <div className='flex m-auto mt-4'>
+          <input type='text' name='settodo' value={todoValue} {...todoInputField} 
+          onChange={(e) => {
+            todoInputField.onChange(e);
+            changeTodo(e)
+          }}
+          className="border-4 border-indigo-600 focus:outline-none"/>
+        {/* </div>
+        <div> */}
+          <button className='bg-white px-2 py-1' onClick={handleSubmit(submitTodo)} >add todo</button>
+        </div> 
+      </div>
       <div>
-        <label>insert your todos of today</label>
-        <input type='text' name='settodo' value={todoValue} {...todoInputField} 
-        onChange={(e) => {
-          todoInputField.onChange(e);
-          changeTodo(e)
-        }}/>
-        <button onClick={handleSubmit(submitTodo)} >add todo</button>
-      </div> 
-      <p>{errors.todo?.message}</p>
-      {todoItm.map((todo, index)=>{
-        return <TodoItem 
-        deleteItm={deleteHandler} todo={todo} numberTodo={index} key={index}
-        /> 
-      })}
+        <p>{errors.todo?.message}</p>
+      
+        {todoItm.map((todo, index)=>{
+          return <TodoItem 
+          deleteItm={deleteHandler} todo={todo} numberTodo={index} key={index}
+          /> 
+        })}
+      </div>
     </div>
   )
 }
