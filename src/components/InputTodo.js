@@ -41,7 +41,7 @@ function InputTodo() {
   return (
     <div className='flex flex-col mt-10'>
       <div className='flex flex-col justify-center bg-sky-500 h-28 rounded-b-2xl py-10 px-10 shadow-2xl'>
-          <label>insert your todos of today:</label>
+          <label>کار های امروزتان وارد کنید:</label>
         <div className='flex m-auto mt-4'>
           <input type='text' name='settodo' value={todoValue} {...todoInputField} 
           onChange={(e) => {
@@ -49,14 +49,19 @@ function InputTodo() {
             changeTodo(e)
           }}
           className="border-4 border-indigo-600 focus:outline-none"/>
-        {/* </div>
-        <div> */}
+
           <button className='bg-white px-2 py-1' onClick={handleSubmit(submitTodo)} >add todo</button>
         </div> 
       </div>
-      <div>
-        <p>{errors.todo?.message}</p>
-      
+      <div> 
+    {errors.todo &&
+      <div role="alert">
+        <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">اخطار</div>
+        <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+          <p>{errors.todo?.message}</p>
+        </div>
+      </div>
+    }
         {todoItm.map((todo, index)=>{
           return <TodoItem 
           deleteItm={deleteHandler} todo={todo} numberTodo={index} key={index}
