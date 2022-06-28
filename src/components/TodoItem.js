@@ -23,7 +23,7 @@ function TodoItem(props) {
       <div className='my-auto'>
         <p className={complete ? classes.completeItm : ""} >{props.todo}</p>
       </div>
-      <div className='ml-auto'>
+      <div className='mr-auto'>
         <button  className ="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={markHandler}>mark</button>
         <button  className ="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-1 rounded" onClick={deleteHandler}>delete</button>
       </div>
