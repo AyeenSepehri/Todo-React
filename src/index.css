@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -41,4 +41,7 @@
   background-color: aqua;
   opacity: 0.4;
   visibility: visible;
-}
+} */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
