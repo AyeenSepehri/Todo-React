@@ -1,27 +1,32 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import TodoItem from './TodoItem'
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+//validation of input
 const schema = yup.object().shape({
   todo :yup.string().required("پر کردن لیست اجباری است")
 });
 
 function InputTodo() {
+  //states
     const [todoValue , setTodoValue] = useState("")
     const [todoItm , setTodoItm] = useState([])
     const [groups, setGroups] = useState()
     const [groupingTodos, setGroupingTodos] = useState([])
 
+    //useForm for validate input
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
       resolver: yupResolver(schema),
     });
 
+    //onchange input todo
     const changeTodo = (e) => {
         setTodoValue(e.target.value)
       }
 
+      //submit input todo for add todo Item
       const submitTodo = () => {
         const updateTodo = [...todoItm]
         updateTodo.push(todoValue)
@@ -31,6 +36,8 @@ function InputTodo() {
         // console.log(todoItm)
       }
 
+      //define the delete handler
+      //its a prop function from TodoItem component
       const deleteHandler = (numberTodo) => {
         const updateTodo = [...todoItm]
         updateTodo.splice(numberTodo , 1)
@@ -39,39 +46,37 @@ function InputTodo() {
         console.log(updateTodo)
         console.log(numberTodo)
       }
-      const todoInputField = register("todo", { required: true });
-
-      // const changeGroup = (e) => {
-      //   const groups = e.target.value
-      //   console.log(groups)
-      //   if(groups === "complete"){
-      //     console.log(todoItm.index)
-      //     const completeGroup = () => {}
-      //   }else if(groups === "uncomplete"){
-      //     console.log("their uncomplete")
-      //   }else{
-      //     console.log("their all")
-      //   }
-      // }
-
-
+      
+      //define grouping item and use it in drop down menu
+      //it's a prop function from todoItem component inside mark button
+      //reason for define it in mark handler is take complete state
+      //problem is that: how to define complete in .filter callback function so that sync with complete state in todoItem component
       const completeGroup = (complete) =>{
-
-
-
-        // console.log(complete)
-
-        // const updateTodo = groupingTodos
-        // const targetItem = todoItm
-        // updateTodo.push(targetItem)
-        // setGroupingTodos(updateTodo)
-
-        // if(groups === "complete"){
-        //   console.log(groupingTodos)
+        
+        switch(groups){
+          case "complete" :
+            setGroupingTodos(todoItm.filter(todo => todo.complete === true))
+            console.log(groupingTodos)
+            break;
+          case "uncomplete" :
+            setGroupingTodos(todoItm.filter(todo => todo.complete === false))
+            console.log("uncomplete able")
+            break;
+          default : 
+            setGroupingTodos(todoItm)
+            console.log("its all too")
+            break;
+            }
+          }
           
-        }
-      }
-
+          //useEffect for rerender completeGroup when todoItm and groups change
+          useEffect(() => {
+            completeGroup()
+            console.log("i will undrestand")
+          },[todoItm, groups])
+          
+          //define register of validation in a variable for define it inside onchange
+          const todoInputField = register("todo", { required: true });
 
   return (
     <div className='flex flex-col mt-10'>
@@ -106,7 +111,7 @@ function InputTodo() {
     }
         {todoItm.map((todo, index)=>{
           return <TodoItem 
-          deleteItm={deleteHandler} trueState={completeGroup} complete={true} todo={todo} numberTodo={index} key={index} 
+          deleteItm={deleteHandler} trueState={completeGroup} complete={Boolean} todo={todo} numberTodo={index} key={index} 
           /> 
         })}
       </div>
