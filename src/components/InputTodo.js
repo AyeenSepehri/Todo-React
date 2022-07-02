@@ -28,39 +28,46 @@ function InputTodo() {
 
       //submit input todo for add todo Item
       const submitTodo = () => {
+        const todos = {
+          index: Math.floor(Math.random() * 10000),
+          caption: todoValue, 
+          complete : false,
+        }
         const updateTodo = [...todoItm]
-        updateTodo.push(todoValue)
+        updateTodo.push(todos)
         setTodoItm(updateTodo)
         setTodoValue("")
         reset()   
-        // console.log(todoItm)
+        console.log(todoItm)
+      
       }
 
       //define the delete handler
       //its a prop function from TodoItem component
       const deleteHandler = (numberTodo) => {
         const updateTodo = [...todoItm]
-        updateTodo.splice(numberTodo , 1)
+        updateTodo.splice({numberTodo} , 1)
         setTodoItm(updateTodo)
 
         console.log(updateTodo)
         console.log(numberTodo)
       }
-      
+           
+     //define completeHandler function for modify complete property of todos object to a dynamic value
+      const completeHandler = (complete) => {
+        console.log(complete)
+      }
+       
       //define grouping item and use it in drop down menu
-      //it's a prop function from todoItem component inside mark button
-      //reason for define it in mark handler is take complete state
-      //problem is that: how to define complete in .filter callback function so that sync with complete state in todoItem component
-      const completeGroup = (complete) =>{
-        
+      const completeGroup = () =>{
         switch(groups){
           case "complete" :
-            setGroupingTodos(todoItm.filter(todo => todo.complete === true))
+            setGroupingTodos(todoItm.filter(todos => todos.complete === true))
             console.log(groupingTodos)
             break;
           case "uncomplete" :
-            setGroupingTodos(todoItm.filter(todo => todo.complete === false))
-            console.log("uncomplete able")
+            setGroupingTodos(todoItm.filter(todos => todos.complete === false))
+            console.log(groupingTodos)
             break;
           default : 
             setGroupingTodos(todoItm)
@@ -72,7 +79,7 @@ function InputTodo() {
           //useEffect for rerender completeGroup when todoItm and groups change
           useEffect(() => {
             completeGroup()
-            console.log("i will undrestand")
+            console.log(todoItm)
           },[todoItm, groups])
           
           //define register of validation in a variable for define it inside onchange
@@ -109,9 +116,9 @@ function InputTodo() {
         </div>
       </div>
     }
-        {todoItm.map((todo, index)=>{
+        {todoItm.map(({caption, index, complete})=>{
           return <TodoItem 
-          deleteItm={deleteHandler} trueState={completeGroup} complete={Boolean} todo={todo} numberTodo={index} key={index} 
+          deleteItm={deleteHandler} completeStatus={completeHandler} complete={complete}  todo={caption} numberTodo={index} key={index} 
           /> 
         })}
       </div>
